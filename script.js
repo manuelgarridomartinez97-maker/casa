@@ -17,6 +17,8 @@ const supabaseClient =
 const fechaInicio =
     new Date("2023-07-29");
 
+const BUCKET_FOTOS = "fotos";
+
 
 // ========================================
 // FECHA DE HOY
@@ -33,17 +35,8 @@ function actualizarFecha() {
         year: "numeric"
     };
 
-    const elemento =
-        document.getElementById("fecha");
-
-    if (elemento) {
-
-        elemento.textContent =
-            ahora.toLocaleDateString(
-                "es-ES",
-                opciones
-            );
-    }
+    document.getElementById("fecha").textContent =
+        ahora.toLocaleDateString("es-ES", opciones);
 }
 
 
@@ -64,14 +57,8 @@ function actualizarContador() {
             (1000 * 60 * 60 * 24)
         );
 
-    const elemento =
-        document.getElementById("contador");
-
-    if (elemento) {
-
-        elemento.textContent =
-            `${dias} días ❤️`;
-    }
+    document.getElementById("contador").textContent =
+        `${dias} días ❤️`;
 }
 
 
@@ -124,52 +111,40 @@ async function cargarProductos() {
 function mostrarProductos(productos) {
 
     const lista =
-        document.getElementById(
-            "listaCompra"
-        );
+        document.getElementById("listaCompra");
 
     if (!lista) return;
 
     lista.innerHTML = "";
 
-    productos.forEach(
-        (producto) => {
+    productos.forEach((producto) => {
 
-            const li =
-                document.createElement("li");
+        const li =
+            document.createElement("li");
 
-            li.innerHTML = `
+        li.innerHTML = `
 
-                <span>
-                    🛒 ${escaparHTML(
-                        producto.nombre
-                    )}
-                </span>
+            <span>
+                🛒 ${escaparHTML(producto.nombre)}
+            </span>
 
-                <button
-                    class="eliminar"
-                    onclick="eliminarProducto(${producto.id})">
+            <button
+                class="eliminar"
+                onclick="eliminarProducto(${producto.id})">
+                ❌
+            </button>
 
-                    ❌
+        `;
 
-                </button>
-
-            `;
-
-            lista.appendChild(li);
-        }
-    );
+        lista.appendChild(li);
+    });
 }
 
 
 async function agregarProducto() {
 
     const input =
-        document.getElementById(
-            "producto"
-        );
-
-    if (!input) return;
+        document.getElementById("producto");
 
     const texto =
         input.value.trim();
@@ -237,6 +212,9 @@ async function cargarTareas() {
         await supabaseClient
             .from("tareas")
             .select("*")
+            .order("completada", {
+                ascending: true
+            })
             .order("id", {
                 ascending: true
             });
@@ -260,52 +238,69 @@ async function cargarTareas() {
 function mostrarTareas(tareas) {
 
     const lista =
-        document.getElementById(
-            "listaTareas"
-        );
+        document.getElementById("listaTareas");
 
     if (!lista) return;
 
     lista.innerHTML = "";
 
-    tareas.forEach(
-        (tarea) => {
+    if (tareas.length === 0) {
 
-            const li =
-                document.createElement("li");
+        lista.innerHTML = `
+            <div class="sin-eventos">
+                🧹
+                <p>No hay tareas.</p>
+                <small>Añadid vuestra primera tarea ❤️</small>
+            </div>
+        `;
 
-            li.innerHTML = `
+        return;
+    }
 
-                <span>
-                    🧹 ${escaparHTML(
-                        tarea.nombre
-                    )}
-                </span>
+    tareas.forEach((tarea) => {
 
-                <button
-                    class="eliminar"
-                    onclick="eliminarTarea(${tarea.id})">
+        const li =
+            document.createElement("li");
 
-                    ❌
+        li.className =
+            tarea.completada
+                ? "tarea-completada"
+                : "";
 
-                </button>
+        li.innerHTML = `
 
-            `;
+            <button
+                class="boton-tarea"
+                onclick="cambiarEstadoTarea(${tarea.id}, ${!tarea.completada})"
+                title="Cambiar estado">
 
-            lista.appendChild(li);
-        }
-    );
+                ${tarea.completada ? "✅" : "⬜"}
+
+            </button>
+
+            <span class="texto-tarea">
+
+                🧹 ${escaparHTML(tarea.nombre)}
+
+            </span>
+
+            <button
+                class="eliminar"
+                onclick="eliminarTarea(${tarea.id})">
+                ❌
+            </button>
+
+        `;
+
+        lista.appendChild(li);
+    });
 }
 
 
 async function agregarTarea() {
 
     const input =
-        document.getElementById(
-            "tarea"
-        );
-
-    if (!input) return;
+        document.getElementById("tarea");
 
     const texto =
         input.value.trim();
@@ -317,7 +312,8 @@ async function agregarTarea() {
             .from("tareas")
             .insert([
                 {
-                    nombre: texto
+                    nombre: texto,
+                    completada: false
                 }
             ]);
 
@@ -336,6 +332,37 @@ async function agregarTarea() {
     }
 
     input.value = "";
+
+    cargarTareas();
+}
+
+
+async function cambiarEstadoTarea(
+    id,
+    completada
+) {
+
+    const { error } =
+        await supabaseClient
+            .from("tareas")
+            .update({
+                completada: completada
+            })
+            .eq("id", id);
+
+    if (error) {
+
+        console.error(
+            "Error cambiando estado de tarea:",
+            error
+        );
+
+        alert(
+            "No se ha podido actualizar la tarea."
+        );
+
+        return;
+    }
 
     cargarTareas();
 }
@@ -396,9 +423,7 @@ async function cargarGastos() {
 function mostrarGastos(gastos) {
 
     const lista =
-        document.getElementById(
-            "listaGastos"
-        );
+        document.getElementById("listaGastos");
 
     if (!lista) return;
 
@@ -406,101 +431,66 @@ function mostrarGastos(gastos) {
 
     let total = 0;
 
-    gastos.forEach(
-        (gasto) => {
+    gastos.forEach((gasto) => {
 
-            const importe =
-                Number(
-                    gasto.importe
-                ) || 0;
+        const importe =
+            Number(gasto.importe) || 0;
 
-            total += importe;
+        total += importe;
 
-            const li =
-                document.createElement("li");
+        const li =
+            document.createElement("li");
 
-            li.innerHTML = `
+        li.innerHTML = `
 
-                <span>
+            <span>
 
-                    ${escaparHTML(
-                        gasto.categoria
-                    )}
-                    -
+                ${escaparHTML(gasto.categoria)}
+                -
+                ${escaparHTML(gasto.concepto)}
 
-                    ${escaparHTML(
-                        gasto.concepto
-                    )}
+                <strong>
+                    ${importe
+                        .toFixed(2)
+                        .replace(".", ",")} €
+                </strong>
 
-                    <strong>
-                        ${importe
-                            .toFixed(2)
-                            .replace(".", ",")
-                        } €
-                    </strong>
+            </span>
 
-                </span>
+            <button
+                class="eliminar"
+                onclick="eliminarGasto(${gasto.id})">
+                ❌
+            </button>
 
-                <button
-                    class="eliminar"
-                    onclick="eliminarGasto(${gasto.id})">
+        `;
 
-                    ❌
+        lista.appendChild(li);
+    });
 
-                </button>
-
-            `;
-
-            lista.appendChild(li);
-        }
-    );
-
-    const totalElemento =
-        document.getElementById(
-            "totalMes"
-        );
-
-    if (totalElemento) {
-
-        totalElemento.textContent =
-            `${total
-                .toFixed(2)
-                .replace(".", ",")
-            } €`;
-    }
+    document.getElementById("totalMes").textContent =
+        `${total
+            .toFixed(2)
+            .replace(".", ",")} €`;
 }
 
 
 async function agregarGasto() {
 
     const concepto =
-        document.getElementById(
-            "conceptoGasto"
-        );
+        document.getElementById("conceptoGasto");
 
     const importe =
-        document.getElementById(
-            "importeGasto"
-        );
+        document.getElementById("importeGasto");
 
     const categoria =
-        document.getElementById(
-            "categoriaGasto"
-        );
-
-    if (
-        !concepto ||
-        !importe ||
-        !categoria
-    ) return;
+        document.getElementById("categoriaGasto");
 
     const textoConcepto =
         concepto.value.trim();
 
     const valorImporte =
-        parseFloat(
-            importe.value
-        );
+        parseFloat(importe.value);
 
     if (
         textoConcepto === "" ||
@@ -520,14 +510,9 @@ async function agregarGasto() {
             .from("gastos")
             .insert([
                 {
-                    concepto:
-                        textoConcepto,
-
-                    importe:
-                        valorImporte,
-
-                    categoria:
-                        categoria.value
+                    concepto: textoConcepto,
+                    importe: valorImporte,
+                    categoria: categoria.value
                 }
             ]);
 
@@ -603,16 +588,8 @@ function modoCita() {
             )
         ];
 
-    const mensaje =
-        document.getElementById(
-            "mensaje"
-        );
-
-    if (mensaje) {
-
-        mensaje.textContent =
-            aleatoria;
-    }
+    document.getElementById("mensaje").textContent =
+        aleatoria;
 }
 
 
@@ -652,9 +629,7 @@ async function cargarAgenda() {
 function mostrarAgenda(eventos) {
 
     const lista =
-        document.getElementById(
-            "listaAgenda"
-        );
+        document.getElementById("listaAgenda");
 
     if (!lista) return;
 
@@ -663,177 +638,111 @@ function mostrarAgenda(eventos) {
     if (eventos.length === 0) {
 
         lista.innerHTML = `
-
             <div class="sin-eventos">
-
                 📅
-
-                <p>
-                    No hay eventos próximos.
-                </p>
-
-                <small>
-                    Añadid vuestro primer plan ❤️
-                </small>
-
+                <p>No hay eventos próximos.</p>
+                <small>Añadid vuestro primer plan ❤️</small>
             </div>
-
         `;
 
         return;
     }
 
-    eventos.forEach(
-        (evento) => {
+    eventos.forEach((evento) => {
 
-            const elemento =
-                document.createElement(
-                    "div"
-                );
+        const elemento =
+            document.createElement("div");
 
-            elemento.className =
-                "evento-agenda";
+        elemento.className =
+            "evento-agenda";
 
-            const fecha =
-                evento.fecha
-                    ? new Date(
-                        evento.fecha +
-                        "T00:00:00"
-                    ).toLocaleDateString(
-                        "es-ES",
-                        {
-                            weekday: "long",
-                            day: "numeric",
-                            month: "long",
-                            year: "numeric"
-                        }
-                    )
-                    : "";
-
-            const hora =
-                evento.hora
-                    ? evento.hora.substring(
-                        0,
-                        5
-                    )
-                    : "";
-
-            const iconos = {
-
-                Pareja: "❤️",
-                Cita: "🍽️",
-                Viaje: "✈️",
-                Cumpleaños: "🎂",
-                Casa: "🏠",
-                Otros: "📌"
-
-            };
-
-            const icono =
-                iconos[
-                    evento.categoria
-                ] || "📌";
-
-            elemento.innerHTML = `
-
-                <div class="categoria">
-
-                    ${icono}
-
-                    ${escaparHTML(
-                        evento.categoria
-                    )}
-
-                </div>
-
-                <h3>
-
-                    ${escaparHTML(
-                        evento.titulo
-                    )}
-
-                </h3>
-
-                <div class="fecha-evento">
-
-                    📅 ${fecha}
-
-                    ${
-                        hora
-                            ? ` · 🕐 ${hora}`
-                            : ""
+        const fecha =
+            evento.fecha
+                ? new Date(
+                    evento.fecha + "T00:00:00"
+                ).toLocaleDateString(
+                    "es-ES",
+                    {
+                        weekday: "long",
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric"
                     }
+                )
+                : "";
 
-                </div>
+        const hora =
+            evento.hora
+                ? evento.hora.substring(0, 5)
+                : "";
 
-                ${
-                    evento.notas
-                        ? `
+        const iconos = {
+            Pareja: "❤️",
+            Cita: "🍽️",
+            Viaje: "✈️",
+            Cumpleaños: "🎂",
+            Casa: "🏠",
+            Otros: "📌"
+        };
 
-                            <div class="notas">
+        const icono =
+            iconos[evento.categoria] || "📌";
 
-                                ${escaparHTML(
-                                    evento.notas
-                                )}
+        elemento.innerHTML = `
 
-                            </div>
+            <div class="categoria">
+                ${icono}
+                ${escaparHTML(evento.categoria)}
+            </div>
 
-                        `
-                        : ""
-                }
+            <h3>
+                ${escaparHTML(evento.titulo)}
+            </h3>
 
-                <button
-                    class="eliminar"
-                    onclick="eliminarEvento(${evento.id})">
+            <div class="fecha-evento">
+                📅 ${fecha}
+                ${hora ? ` · 🕐 ${hora}` : ""}
+            </div>
 
-                    ❌
+            ${
+                evento.notas
+                    ? `
+                        <div class="notas">
+                            ${escaparHTML(evento.notas)}
+                        </div>
+                    `
+                    : ""
+            }
 
-                </button>
+            <button
+                class="eliminar"
+                onclick="eliminarEvento(${evento.id})">
+                ❌
+            </button>
 
-            `;
+        `;
 
-            lista.appendChild(
-                elemento
-            );
-        }
-    );
+        lista.appendChild(elemento);
+    });
 }
 
 
 async function agregarEvento() {
 
     const titulo =
-        document.getElementById(
-            "tituloAgenda"
-        );
+        document.getElementById("tituloAgenda");
 
     const fecha =
-        document.getElementById(
-            "fechaAgenda"
-        );
+        document.getElementById("fechaAgenda");
 
     const hora =
-        document.getElementById(
-            "horaAgenda"
-        );
+        document.getElementById("horaAgenda");
 
     const categoria =
-        document.getElementById(
-            "categoriaAgenda"
-        );
+        document.getElementById("categoriaAgenda");
 
     const notas =
-        document.getElementById(
-            "notasAgenda"
-        );
-
-    if (
-        !titulo ||
-        !fecha ||
-        !hora ||
-        !categoria ||
-        !notas
-    ) return;
+        document.getElementById("notasAgenda");
 
     const texto =
         titulo.value.trim();
@@ -855,22 +764,12 @@ async function agregarEvento() {
             .from("agenda")
             .insert([
                 {
-                    titulo:
-                        texto,
-
-                    fecha:
-                        fecha.value,
-
-                    hora:
-                        hora.value ||
-                        null,
-
-                    categoria:
-                        categoria.value,
-
+                    titulo: texto,
+                    fecha: fecha.value,
+                    hora: hora.value || null,
+                    categoria: categoria.value,
                     notas:
-                        notas.value.trim() ||
-                        null
+                        notas.value.trim() || null
                 }
             ]);
 
@@ -899,12 +798,13 @@ async function agregarEvento() {
 
 async function eliminarEvento(id) {
 
-    const confirmar =
-        confirm(
+    if (
+        !confirm(
             "¿Eliminar este evento?"
-        );
-
-    if (!confirmar) return;
+        )
+    ) {
+        return;
+    }
 
     const { error } =
         await supabaseClient
@@ -930,60 +830,44 @@ async function eliminarEvento(id) {
 // FOTOS 📸
 // ========================================
 
-const BUCKET_FOTOS =
-    "fotos";
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
+        const input =
+            document.getElementById("foto");
 
-// ----------------------------------------
-// MOSTRAR FOTO SELECCIONADA
-// ----------------------------------------
+        const nombre =
+            document.getElementById("nombreFoto");
 
-function mostrarFotoSeleccionada() {
+        if (
+            input &&
+            nombre
+        ) {
 
-    const input =
-        document.getElementById("foto");
+            input.addEventListener(
+                "change",
+                () => {
 
-    const nombre =
-        document.getElementById(
-            "nombreFoto"
-        );
+                    if (
+                        input.files &&
+                        input.files.length > 0
+                    ) {
 
-    if (
-        !input ||
-        !nombre
-    ) {
-        return;
+                        nombre.textContent =
+                            input.files[0].name;
+
+                    } else {
+
+                        nombre.textContent =
+                            "Ninguna foto seleccionada";
+                    }
+                }
+            );
+        }
     }
+);
 
-    if (
-        input.files &&
-        input.files.length > 0
-    ) {
-
-        const archivo =
-            input.files[0];
-
-        nombre.textContent =
-            `📸 ${archivo.name}`;
-
-        console.log(
-            "Foto seleccionada:",
-            archivo.name,
-            archivo.size,
-            archivo.type
-        );
-
-    } else {
-
-        nombre.textContent =
-            "Ninguna foto seleccionada";
-    }
-}
-
-
-// ----------------------------------------
-// CARGAR FOTOS
-// ----------------------------------------
 
 async function cargarFotos() {
 
@@ -991,12 +875,9 @@ async function cargarFotos() {
         await supabaseClient
             .from("fotos")
             .select("*")
-            .order(
-                "created_at",
-                {
-                    ascending: false
-                }
-            );
+            .order("created_at", {
+                ascending: false
+            });
 
     if (error) {
 
@@ -1010,15 +891,9 @@ async function cargarFotos() {
         return;
     }
 
-    mostrarFotos(
-        data || []
-    );
+    mostrarFotos(data || []);
 }
 
-
-// ----------------------------------------
-// MOSTRAR GALERÍA
-// ----------------------------------------
 
 function mostrarFotos(fotos) {
 
@@ -1031,139 +906,100 @@ function mostrarFotos(fotos) {
 
     galeria.innerHTML = "";
 
-    if (
-        fotos.length === 0
-    ) {
+    if (fotos.length === 0) {
 
         galeria.innerHTML = `
-
             <div class="sin-fotos">
-
-                <div class="icono">
-                    📸
-                </div>
-
-                <p>
-                    Todavía no hay recuerdos.
-                </p>
-
-                <small>
-                    Subid vuestra primera foto ❤️
-                </small>
-
+                <div class="icono">📸</div>
+                <p>Todavía no hay recuerdos.</p>
+                <small>Subid vuestra primera foto ❤️</small>
             </div>
-
         `;
 
         return;
     }
 
-    fotos.forEach(
-        (foto) => {
+    fotos.forEach((foto) => {
 
-            const elemento =
-                document.createElement(
-                    "div"
-                );
+        const elemento =
+            document.createElement("div");
 
-            elemento.className =
-                "foto-card";
+        elemento.className =
+            "foto-card";
 
-            let fechaTexto = "";
+        let fechaTexto = "";
 
-            const fecha =
-                foto.fecha ||
-                foto.created_at;
+        const fecha =
+            foto.fecha ||
+            foto.created_at;
 
-            if (fecha) {
+        if (fecha) {
 
-                fechaTexto =
-                    new Date(
-                        fecha
-                    ).toLocaleDateString(
-                        "es-ES",
-                        {
-                            day: "numeric",
-                            month: "long",
-                            year: "numeric"
-                        }
-                    );
-            }
-
-            const urlSegura =
-                escaparHTML(
-                    foto.url
-                );
-
-            const titulo =
-                escaparHTML(
-                    foto.descripcion ||
-                    foto.nombre ||
-                    "Recuerdo"
-                );
-
-            elemento.innerHTML = `
-
-                <img
-                    src="${urlSegura}"
-                    alt="${titulo}"
-                    loading="lazy"
-                    onclick="abrirFoto(${JSON.stringify(
-                        foto.url
-                    )})"
-                >
-
-                <button
-                    class="foto-eliminar"
-                    onclick="eliminarFoto(${foto.id})"
-                    title="Eliminar foto">
-
-                    🗑️
-
-                </button>
-
-                <div class="foto-info">
-
-                    <strong>
-                        ${titulo}
-                    </strong>
-
-                    ${
-                        fechaTexto
-                            ? `
-
-                                <div class="foto-fecha">
-
-                                    📅 ${fechaTexto}
-
-                                </div>
-
-                            `
-                            : ""
+            fechaTexto =
+                new Date(
+                    fecha
+                ).toLocaleDateString(
+                    "es-ES",
+                    {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric"
                     }
-
-                </div>
-
-            `;
-
-            galeria.appendChild(
-                elemento
-            );
+                );
         }
-    );
+
+        elemento.innerHTML = `
+
+            <img
+                src="${escaparHTML(foto.url)}"
+                alt="${escaparHTML(
+                    foto.descripcion ||
+                    foto.nombre
+                )}"
+                onclick="abrirFoto('${escaparHTML(
+                    foto.url
+                )}')"
+                loading="lazy"
+            >
+
+            <button
+                class="foto-eliminar"
+                onclick="eliminarFoto(${foto.id})"
+                title="Eliminar foto">
+                🗑️
+            </button>
+
+            <div class="foto-info">
+
+                <strong>
+                    ${escaparHTML(
+                        foto.descripcion ||
+                        foto.nombre
+                    )}
+                </strong>
+
+                ${
+                    fechaTexto
+                        ? `
+                            <div class="foto-fecha">
+                                📅 ${fechaTexto}
+                            </div>
+                        `
+                        : ""
+                }
+
+            </div>
+        `;
+
+        galeria.appendChild(elemento);
+    });
 }
 
-
-// ----------------------------------------
-// SUBIR FOTO
-// ----------------------------------------
 
 async function subirFoto() {
 
     const input =
-        document.getElementById(
-            "foto"
-        );
+        document.getElementById("foto");
 
     const descripcion =
         document.getElementById(
@@ -1173,11 +1009,6 @@ async function subirFoto() {
     const boton =
         document.getElementById(
             "botonSubirFoto"
-        );
-
-    const nombreFoto =
-        document.getElementById(
-            "nombreFoto"
         );
 
     if (
@@ -1196,11 +1027,7 @@ async function subirFoto() {
     const archivo =
         input.files[0];
 
-
-    // Comprobar que es imagen
-
     if (
-        !archivo.type ||
         !archivo.type.startsWith("image/")
     ) {
 
@@ -1210,9 +1037,6 @@ async function subirFoto() {
 
         return;
     }
-
-
-    // Máximo 10 MB
 
     if (
         archivo.size >
@@ -1226,21 +1050,10 @@ async function subirFoto() {
         return;
     }
 
-
-    if (boton) {
-
-        boton.disabled = true;
-
-        boton.textContent =
-            "⏳ Subiendo foto...";
-    }
-
+    boton.disabled = true;
+    boton.textContent = "⏳ Subiendo...";
 
     try {
-
-        // --------------------------------
-        // CREAR NOMBRE ÚNICO
-        // --------------------------------
 
         const extension =
             archivo.name
@@ -1248,48 +1061,21 @@ async function subirFoto() {
                 .pop()
                 .toLowerCase();
 
-        const nombreSeguro =
-            archivo.name
-                .replace(
-                    /[^a-zA-Z0-9._-]/g,
-                    "_"
-                );
-
         const nombreArchivo =
-            `${Date.now()}-${Math.random()
-                .toString(36)
-                .substring(2, 10)}-${nombreSeguro}`;
+            `${Date.now()}-${crypto.randomUUID()}.${extension}`;
 
-        const ruta =
-            nombreArchivo;
-
-
-        // --------------------------------
-        // SUBIR AL BUCKET
-        // --------------------------------
-
-        console.log(
-            "Subiendo foto:",
-            ruta
-        );
-
-        const {
-            error: errorSubida
-        } =
+        const { error: errorSubida } =
             await supabaseClient
                 .storage
                 .from(BUCKET_FOTOS)
                 .upload(
-                    ruta,
+                    nombreArchivo,
                     archivo,
                     {
                         cacheControl: "3600",
-                        upsert: false,
-                        contentType:
-                            archivo.type
+                        upsert: false
                     }
                 );
-
 
         if (errorSubida) {
 
@@ -1299,52 +1085,21 @@ async function subirFoto() {
             );
 
             alert(
-                `No se ha podido subir la foto.\n\n${errorSubida.message || ""}`
+                "No se ha podido subir la foto."
             );
 
             return;
         }
 
-
-        // --------------------------------
-        // OBTENER URL PÚBLICA
-        // --------------------------------
-
-        const {
-            data: urlData
-        } =
+        const { data: urlData } =
             supabaseClient
                 .storage
                 .from(BUCKET_FOTOS)
                 .getPublicUrl(
-                    ruta
+                    nombreArchivo
                 );
 
-
-        if (
-            !urlData ||
-            !urlData.publicUrl
-        ) {
-
-            alert(
-                "La foto se ha subido, pero no se ha podido obtener su dirección."
-            );
-
-            return;
-        }
-
-
-        const url =
-            urlData.publicUrl;
-
-
-        // --------------------------------
-        // GUARDAR EN TABLA FOTOS
-        // --------------------------------
-
-        const {
-            error: errorTabla
-        } =
+        const { error: errorTabla } =
             await supabaseClient
                 .from("fotos")
                 .insert([
@@ -1357,7 +1112,7 @@ async function subirFoto() {
                             archivo.name,
 
                         url:
-                            url,
+                            urlData.publicUrl,
 
                         fecha:
                             new Date()
@@ -1366,7 +1121,6 @@ async function subirFoto() {
                     }
                 ]);
 
-
         if (errorTabla) {
 
             console.error(
@@ -1374,96 +1128,50 @@ async function subirFoto() {
                 errorTabla
             );
 
-
-            // Intentar borrar la imagen
-            // si falla la tabla
-
             await supabaseClient
                 .storage
                 .from(BUCKET_FOTOS)
                 .remove([
-                    ruta
+                    nombreArchivo
                 ]);
 
-
             alert(
-                `La foto se ha subido, pero no se ha podido guardar.\n\n${errorTabla.message || ""}`
+                "La foto se ha subido, pero no se ha podido guardar."
             );
 
             return;
         }
 
-
-        // --------------------------------
-        // LIMPIAR FORMULARIO
-        // --------------------------------
-
         input.value = "";
-
         descripcion.value = "";
 
-        if (nombreFoto) {
-
-            nombreFoto.textContent =
-                "Ninguna foto seleccionada";
-        }
-
-
-        // --------------------------------
-        // ACTUALIZAR GALERÍA
-        // --------------------------------
+        document.getElementById(
+            "nombreFoto"
+        ).textContent =
+            "Ninguna foto seleccionada";
 
         await cargarFotos();
 
-
-        alert(
-            "❤️ Recuerdo guardado correctamente"
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Error inesperado:",
-            error
-        );
-
-        alert(
-            `Ha ocurrido un error al guardar la foto.\n\n${error.message || error}`
-        );
-
     } finally {
 
-        if (boton) {
-
-            boton.disabled = false;
-
-            boton.textContent =
-                "📤 Guardar recuerdo";
-        }
+        boton.disabled = false;
+        boton.textContent =
+            "📤 Guardar recuerdo";
     }
 }
 
 
-// ----------------------------------------
-// ELIMINAR FOTO
-// ----------------------------------------
-
 async function eliminarFoto(id) {
 
-    const confirmar =
-        confirm(
+    if (
+        !confirm(
             "¿Quieres eliminar este recuerdo? ❤️"
-        );
+        )
+    ) {
+        return;
+    }
 
-    if (!confirmar) return;
-
-
-    // Buscar registro
-
-    const {
-        data,
-        error
-    } =
+    const { data, error } =
         await supabaseClient
             .from("fotos")
             .select("*")
@@ -1477,44 +1185,25 @@ async function eliminarFoto(id) {
             error
         );
 
-        alert(
-            "No se ha podido encontrar la foto."
-        );
-
         return;
     }
-
-
-    // --------------------------------
-    // OBTENER RUTA DEL STORAGE
-    // --------------------------------
 
     let ruta = null;
 
     try {
 
         const url =
-            new URL(
-                data.url
-            );
+            new URL(data.url);
 
-        const marcador =
-            "/storage/v1/object/public/fotos/";
+        const parte =
+            url.pathname.split(
+                "/storage/v1/object/public/fotos/"
+            )[1];
 
-        const posicion =
-            url.pathname.indexOf(
-                marcador
-            );
-
-        if (posicion !== -1) {
+        if (parte) {
 
             ruta =
-                decodeURIComponent(
-                    url.pathname.substring(
-                        posicion +
-                        marcador.length
-                    )
-                );
+                decodeURIComponent(parte);
         }
 
     } catch (error) {
@@ -1525,11 +1214,6 @@ async function eliminarFoto(id) {
         );
     }
 
-
-    // --------------------------------
-    // BORRAR DEL STORAGE
-    // --------------------------------
-
     if (ruta) {
 
         const {
@@ -1538,9 +1222,7 @@ async function eliminarFoto(id) {
             await supabaseClient
                 .storage
                 .from(BUCKET_FOTOS)
-                .remove([
-                    ruta
-                ]);
+                .remove([ruta]);
 
         if (errorStorage) {
 
@@ -1551,21 +1233,13 @@ async function eliminarFoto(id) {
         }
     }
 
-
-    // --------------------------------
-    // BORRAR DE LA TABLA
-    // --------------------------------
-
     const {
         error: errorTabla
     } =
         await supabaseClient
             .from("fotos")
             .delete()
-            .eq(
-                "id",
-                id
-            );
+            .eq("id", id);
 
     if (errorTabla) {
 
@@ -1581,14 +1255,9 @@ async function eliminarFoto(id) {
         return;
     }
 
-
     cargarFotos();
 }
 
-
-// ----------------------------------------
-// ABRIR FOTO
-// ----------------------------------------
 
 function abrirFoto(url) {
 
@@ -1598,10 +1267,6 @@ function abrirFoto(url) {
     );
 }
 
-
-// ----------------------------------------
-// ERROR FOTOS
-// ----------------------------------------
 
 function mostrarErrorFotos() {
 
@@ -1613,23 +1278,11 @@ function mostrarErrorFotos() {
     if (!galeria) return;
 
     galeria.innerHTML = `
-
         <div class="sin-fotos">
-
-            <div class="icono">
-                ⚠️
-            </div>
-
-            <p>
-                No se han podido cargar las fotos.
-            </p>
-
-            <small>
-                Comprueba los permisos de Supabase.
-            </small>
-
+            <div class="icono">⚠️</div>
+            <p>No se han podido cargar las fotos.</p>
+            <small>Comprueba los permisos de Supabase.</small>
         </div>
-
     `;
 }
 
@@ -1648,7 +1301,8 @@ async function actualizarPanel() {
     const tareas =
         await supabaseClient
             .from("tareas")
-            .select("id");
+            .select("id")
+            .eq("completada", false);
 
     const agenda =
         await supabaseClient
@@ -1659,7 +1313,6 @@ async function actualizarPanel() {
         await supabaseClient
             .from("gastos")
             .select("importe");
-
 
     const resumenCompra =
         document.getElementById(
@@ -1681,7 +1334,6 @@ async function actualizarPanel() {
             "resumenGastos"
         );
 
-
     if (resumenCompra) {
 
         resumenCompra.textContent =
@@ -1689,7 +1341,6 @@ async function actualizarPanel() {
                 ? compra.data.length
                 : 0;
     }
-
 
     if (resumenTareas) {
 
@@ -1699,7 +1350,6 @@ async function actualizarPanel() {
                 : 0;
     }
 
-
     if (resumenAgenda) {
 
         resumenAgenda.textContent =
@@ -1707,7 +1357,6 @@ async function actualizarPanel() {
                 ? agenda.data.length
                 : 0;
     }
-
 
     let total = 0;
 
@@ -1720,19 +1369,16 @@ async function actualizarPanel() {
                     Number(
                         gasto.importe
                     ) || 0;
-
             }
         );
     }
-
 
     if (resumenGastos) {
 
         resumenGastos.textContent =
             `${total
                 .toFixed(2)
-                .replace(".", ",")
-            } €`;
+                .replace(".", ",")} €`;
     }
 }
 
@@ -1763,9 +1409,7 @@ actualizarPanel();
 // ========================================
 
 supabaseClient
-    .channel(
-        "productos-tiempo-real"
-    )
+    .channel("productos-tiempo-real")
     .on(
         "postgres_changes",
         {
@@ -1774,18 +1418,14 @@ supabaseClient
             table: "productos"
         },
         () => {
-
             cargarProductos();
-
         }
     )
     .subscribe();
 
 
 supabaseClient
-    .channel(
-        "tareas-tiempo-real"
-    )
+    .channel("tareas-tiempo-real")
     .on(
         "postgres_changes",
         {
@@ -1794,18 +1434,14 @@ supabaseClient
             table: "tareas"
         },
         () => {
-
             cargarTareas();
-
         }
     )
     .subscribe();
 
 
 supabaseClient
-    .channel(
-        "gastos-tiempo-real"
-    )
+    .channel("gastos-tiempo-real")
     .on(
         "postgres_changes",
         {
@@ -1814,18 +1450,14 @@ supabaseClient
             table: "gastos"
         },
         () => {
-
             cargarGastos();
-
         }
     )
     .subscribe();
 
 
 supabaseClient
-    .channel(
-        "agenda-tiempo-real"
-    )
+    .channel("agenda-tiempo-real")
     .on(
         "postgres_changes",
         {
@@ -1834,18 +1466,14 @@ supabaseClient
             table: "agenda"
         },
         () => {
-
             cargarAgenda();
-
         }
     )
     .subscribe();
 
 
 supabaseClient
-    .channel(
-        "fotos-tiempo-real"
-    )
+    .channel("fotos-tiempo-real")
     .on(
         "postgres_changes",
         {
@@ -1854,9 +1482,7 @@ supabaseClient
             table: "fotos"
         },
         () => {
-
             cargarFotos();
-
         }
     )
     .subscribe();
