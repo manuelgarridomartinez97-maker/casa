@@ -40,25 +40,18 @@ body {
 }
 
 
-/* ========================================
-   CONTENEDOR
-   ======================================== */
+/* CONTENEDOR */
 
 .contenedor {
     width: 100%;
     max-width: 760px;
-
     margin: 0 auto;
-
     padding: 25px 18px 45px;
-
     text-align: center;
 }
 
 
-/* ========================================
-   CABECERA
-   ======================================== */
+/* CABECERA */
 
 .cabecera {
     padding: 15px 0 20px;
@@ -71,27 +64,20 @@ body {
 
 h1 {
     margin: 0;
-
     font-size: 42px;
     font-weight: 800;
-
     letter-spacing: -1.5px;
-
     color: #302a35;
 }
 
 .cabecera p {
     margin: 8px 0 0;
-
     color: #857b87;
-
     font-size: 16px;
 }
 
 
-/* ========================================
-   TARJETAS
-   ======================================== */
+/* TARJETAS */
 
 .tarjeta {
     margin: 16px 0;
@@ -111,9 +97,7 @@ h1 {
 }
 
 
-/* ========================================
-   CONTADOR PRINCIPAL
-   ======================================== */
+/* CONTADOR */
 
 .tarjeta-principal {
     padding: 28px 20px;
@@ -126,47 +110,35 @@ h1 {
 
 .tarjeta h2 {
     margin: 0;
-
     color: #3c3540;
-
     font-size: 21px;
     font-weight: 750;
 }
 
 #contador {
     margin: 12px 0 5px;
-
     color: #b14f72;
-
     font-size: 32px;
     font-weight: 850;
-
     letter-spacing: -1px;
 }
 
 .separador {
     width: 45px;
     height: 3px;
-
     margin: 15px auto;
-
     border-radius: 10px;
-
     background: #d58ba2;
 }
 
 .subtitulo {
     margin: 0;
-
     color: #8b818d;
-
     font-size: 14px;
 }
 
 
-/* ========================================
-   FECHA
-   ======================================== */
+/* FECHA */
 
 .fecha-card {
     padding: 20px;
@@ -174,45 +146,32 @@ h1 {
 
 #fecha {
     margin: 8px 0 0;
-
     color: #756d78;
-
     font-size: 17px;
     font-weight: 600;
-
     text-transform: capitalize;
 }
 
 
-/* ========================================
-   ACCESOS RÁPIDOS
-   ======================================== */
+/* ACCESOS */
 
 .accesos {
     display: grid;
-
     grid-template-columns: 1fr 1fr;
-
     gap: 12px;
-
     margin: 18px 0;
 }
 
 .acceso {
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
-
     justify-content: center;
 
     min-height: 125px;
-
     padding: 17px;
 
     text-decoration: none;
-
     color: #3d3740;
 
     background: rgba(255, 255, 255, 0.88);
@@ -238,7 +197,6 @@ h1 {
 
 .acceso-icono {
     font-size: 30px;
-
     margin-bottom: 8px;
 }
 
@@ -248,32 +206,23 @@ h1 {
 
 .acceso small {
     margin-top: 4px;
-
     color: #918893;
-
     font-size: 12px;
 }
 
 
-/* ========================================
-   TÍTULOS DE SECCIÓN
-   ======================================== */
+/* TÍTULOS */
 
 .titulo-seccion {
     display: flex;
-
     align-items: center;
-
     gap: 13px;
-
     margin-bottom: 18px;
-
     text-align: left;
 }
 
 .titulo-icono {
     display: flex;
-
     align-items: center;
     justify-content: center;
 
@@ -295,37 +244,28 @@ h1 {
 
 .titulo-seccion p {
     margin: 3px 0 0;
-
     color: #918792;
-
     font-size: 13px;
 }
 
 
-/* ========================================
-   ENTRADAS
-   ======================================== */
+/* ENTRADAS */
 
 .entrada {
     display: flex;
-
     width: 100%;
-
     gap: 9px;
-
     margin-bottom: 16px;
 }
 
 input,
 select {
     width: 100%;
-
     min-width: 0;
 
     padding: 13px 14px;
 
     border: 1px solid #e5e0e7;
-
     border-radius: 14px;
 
     background: #faf9fb;
@@ -333,7 +273,6 @@ select {
     color: #353039;
 
     font-family: inherit;
-
     font-size: 16px;
 
     outline: none;
@@ -350,9 +289,7 @@ select:focus {
 }
 
 
-/* ========================================
-   BOTONES
-   ======================================== */
+/* BOTONES */
 
 button {
     border: 0;
@@ -373,7 +310,6 @@ button {
     font-family: inherit;
 
     font-size: 15px;
-
     font-weight: 700;
 
     white-space: nowrap;
@@ -400,22 +336,17 @@ button:active {
 }
 
 
-/* ========================================
-   LISTAS
-   ======================================== */
+/* LISTAS */
 
 ul {
     list-style: none;
-
     margin: 0;
     padding: 0;
 }
 
 li {
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
     gap: 10px;
@@ -434,9 +365,7 @@ li {
 }
 
 
-/* ========================================
-   ELIMINAR
-   ======================================== */
+/* ELIMINAR */
 
 .eliminar {
     padding: 7px 9px;
@@ -454,28 +383,21 @@ li {
 
 .eliminar:hover {
     background: #e4e1e5;
-
     box-shadow: none;
-
     transform: none;
 }
 
 
-/* ========================================
-   GASTOS
-   ======================================== */
+/* GASTOS */
 
 .resumen-gastos {
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
     gap: 10px;
 
     margin-bottom: 16px;
-
     padding: 18px;
 
     border-radius: 18px;
@@ -492,27 +414,20 @@ li {
 
 .resumen-gastos span {
     color: #7b727d;
-
     font-size: 14px;
-
     font-weight: 600;
 }
 
 #totalMes {
     color: #a94e70;
-
     font-size: 26px;
-
     font-weight: 850;
 }
 
 .gastos-formulario {
     display: flex;
-
     flex-direction: column;
-
     gap: 10px;
-
     width: 100%;
 }
 
@@ -520,24 +435,438 @@ li {
 .gastos-formulario select,
 .gastos-formulario button {
     width: 100%;
-
     max-width: 100%;
-
     min-width: 0;
 }
 
 #listaGastos li strong {
     color: #a94e70;
-
     font-size: 16px;
-
     white-space: nowrap;
 }
 
 
+/* AGENDA */
+
+#agenda {
+    overflow: hidden;
+}
+
+#agenda > p {
+    color: #8d858d;
+    margin-bottom: 22px;
+}
+
+.agenda-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.agenda-formulario input,
+.agenda-formulario select {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 50px;
+}
+
+.agenda-formulario button {
+    width: 100%;
+    margin-top: 4px;
+}
+
+.lista-agenda {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.evento-agenda {
+    position: relative;
+
+    padding: 18px;
+    padding-right: 55px;
+
+    border-radius: 18px;
+
+    background: #faf8fa;
+
+    border: 1px solid #eee8ed;
+
+    text-align: left;
+
+    transition: transform 0.2s ease;
+}
+
+.evento-agenda:hover {
+    transform: translateY(-2px);
+}
+
+.evento-agenda .categoria {
+    font-size: 13px;
+    font-weight: 600;
+
+    margin-bottom: 7px;
+
+    color: #a06f82;
+}
+
+.evento-agenda h3 {
+    margin: 0 0 8px;
+
+    font-size: 18px;
+
+    color: #403941;
+}
+
+.evento-agenda .fecha-evento {
+    font-size: 14px;
+    color: #756d76;
+}
+
+.evento-agenda .notas {
+    margin-top: 10px;
+
+    font-size: 14px;
+
+    color: #8c838d;
+}
+
+.evento-agenda .eliminar {
+    position: absolute;
+
+    right: 12px;
+    top: 12px;
+
+    padding: 7px 9px;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+}
+
+.sin-eventos {
+    padding: 25px 10px;
+
+    text-align: center;
+
+    color: #99919a;
+}
+
+
+/* PANEL PRINCIPAL */
+
+.panel-principal {
+    margin: 25px 0;
+
+    padding: 22px;
+
+    border-radius: 24px;
+
+    background: rgba(255, 255, 255, 0.85);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.panel-titulo {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    text-align: left;
+
+    margin-bottom: 20px;
+}
+
+.panel-titulo > span {
+    font-size: 34px;
+}
+
+.panel-titulo h2 {
+    margin: 0;
+
+    color: #403941;
+
+    font-size: 22px;
+}
+
+.panel-titulo p {
+    margin: 4px 0 0;
+
+    color: #8c838d;
+
+    font-size: 14px;
+}
+
+.resumen-casa {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 12px;
+}
+
+.resumen-card {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 105px;
+
+    padding: 12px;
+
+    border-radius: 18px;
+
+    background: #faf8fa;
+
+    border: 1px solid #eee8ed;
+
+    text-decoration: none;
+
+    transition:
+        transform 0.2s ease;
+}
+
+.resumen-card:hover {
+    transform: translateY(-3px);
+}
+
+.resumen-card span {
+    font-size: 25px;
+    margin-bottom: 6px;
+}
+
+.resumen-card strong {
+    color: #403941;
+    font-size: 20px;
+}
+
+.resumen-card small {
+    margin-top: 4px;
+
+    color: #8c838d;
+
+    font-size: 13px;
+}
+
+
 /* ========================================
-   MENSAJE
+   FOTOS
    ======================================== */
+
+.fotos-formulario {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    width: 100%;
+
+    margin-bottom: 25px;
+}
+
+.selector-foto {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 55px;
+
+    padding: 14px;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8eaf0,
+            #eee9f8
+        );
+
+    border: 1px dashed #d6a5b6;
+
+    color: #a34f70;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.selector-foto:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 20px rgba(170, 78, 112, 0.10);
+}
+
+.nombre-foto {
+    padding: 5px 2px;
+
+    color: #8c838d;
+
+    font-size: 13px;
+
+    text-align: center;
+}
+
+.fotos-formulario button {
+    width: 100%;
+}
+
+.galeria-fotos {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 14px;
+
+    margin-top: 10px;
+}
+
+.foto-card {
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    background: #faf8fa;
+
+    border: 1px solid #eee8ed;
+
+    text-align: left;
+
+    box-shadow:
+        0 8px 20px rgba(53, 42, 64, 0.06);
+}
+
+.foto-card img {
+    display: block;
+
+    width: 100%;
+
+    height: 220px;
+
+    object-fit: cover;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease;
+}
+
+.foto-card:hover img {
+    transform: scale(1.03);
+}
+
+.foto-info {
+    padding: 12px 13px 14px;
+}
+
+.foto-info strong {
+    display: block;
+
+    color: #403941;
+
+    font-size: 15px;
+
+    line-height: 1.4;
+}
+
+.foto-fecha {
+    margin-top: 5px;
+
+    color: #958c96;
+
+    font-size: 12px;
+}
+
+.foto-eliminar {
+    position: absolute;
+
+    top: 10px;
+    right: 10px;
+
+    width: 34px;
+    height: 34px;
+
+    padding: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.90);
+
+    color: #6e6870;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.10);
+
+    font-size: 14px;
+}
+
+.foto-eliminar:hover {
+    background: white;
+
+    transform: none;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.14);
+}
+
+.sin-fotos {
+    grid-column: 1 / -1;
+
+    padding: 30px 15px;
+
+    text-align: center;
+
+    color: #99919a;
+}
+
+.sin-fotos .icono {
+    font-size: 40px;
+
+    margin-bottom: 8px;
+}
+
+.sin-fotos p {
+    margin: 0;
+
+    font-size: 15px;
+}
+
+.sin-fotos small {
+    display: block;
+
+    margin-top: 5px;
+
+    font-size: 12px;
+}
+
+
+/* MENSAJE */
 
 .mensaje-card {
     padding: 28px 20px;
@@ -545,7 +874,6 @@ li {
 
 .mensaje-corazon {
     font-size: 34px;
-
     margin-bottom: 8px;
 }
 
@@ -564,9 +892,7 @@ li {
 }
 
 
-/* ========================================
-   FOOTER
-   ======================================== */
+/* FOOTER */
 
 footer {
     padding: 15px 0 5px;
@@ -577,9 +903,7 @@ footer {
 }
 
 
-/* ========================================
-   MÓVIL
-   ======================================== */
+/* MÓVIL */
 
 @media (max-width: 600px) {
 
@@ -627,9 +951,6 @@ footer {
         font-size: 11px;
     }
 
-
-    /* COMPRA Y TAREAS */
-
     .entrada {
         gap: 8px;
     }
@@ -641,9 +962,6 @@ footer {
     .entrada button {
         padding: 12px 15px;
     }
-
-
-    /* GASTOS */
 
     .gastos-formulario {
         display: flex !important;
@@ -673,103 +991,31 @@ footer {
         font-size: 23px;
     }
 
-
-    /* LISTAS */
-
     li {
         padding: 12px;
     }
 
-}
+    .panel-principal {
+        padding: 18px;
 
-/* ========================================
-   AGENDA MODERNA
-   ======================================== */
+        border-radius: 20px;
+    }
 
-#agenda {
-    overflow: hidden;
-}
+    .resumen-casa {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
 
-#agenda > p {
-    color: #8d858d;
-    margin-bottom: 22px;
-}
+    .resumen-card {
+        min-height: 100px;
+    }
 
-.agenda-formulario {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
+    .galeria-fotos {
+        grid-template-columns: 1fr;
+    }
 
-.agenda-formulario input,
-.agenda-formulario select {
-    width: 100%;
-    box-sizing: border-box;
-    min-height: 50px;
-}
+    .foto-card img {
+        height: 240px;
+    }
 
-.agenda-formulario button {
-    width: 100%;
-    margin-top: 4px;
-}
-
-.lista-agenda {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 25px;
-}
-
-.evento-agenda {
-    position: relative;
-    padding: 18px;
-    padding-right: 55px;
-    border-radius: 18px;
-    background: #faf8fa;
-    border: 1px solid #eee8ed;
-    text-align: left;
-    transition: transform 0.2s ease;
-}
-
-.evento-agenda:hover {
-    transform: translateY(-2px);
-}
-
-.evento-agenda .categoria {
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 7px;
-    color: #a06f82;
-}
-
-.evento-agenda h3 {
-    margin: 0 0 8px;
-    font-size: 18px;
-    color: #403941;
-}
-
-.evento-agenda .fecha-evento {
-    font-size: 14px;
-    color: #756d76;
-}
-
-.evento-agenda .notas {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #8c838d;
-}
-
-.evento-agenda .eliminar {
-    position: absolute;
-    right: 12px;
-    top: 12px;
-    padding: 7px 9px;
-    border-radius: 10px;
-    font-size: 13px;
-}
-
-.sin-eventos {
-    padding: 25px 10px;
-    text-align: center;
-    color: #99919a;
 }
