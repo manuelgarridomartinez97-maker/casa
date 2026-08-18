@@ -66,6 +66,54 @@
 
         <!-- MENSAJE -->
         <div class="tarjeta">
+            
+             <h2>💰 Gastos de casa</h2>
+
+    <div class="entrada">
+
+        <input
+            type="text"
+            id="conceptoGasto"
+            placeholder="Concepto..."
+        >
+
+        <input
+            type="number"
+            id="importeGasto"
+            placeholder="Importe..."
+            step="0.01"
+            min="0"
+        >
+
+        <select id="categoriaGasto">
+
+            <option value="Comida">🛒 Comida</option>
+            <option value="Casa">🏠 Casa</option>
+            <option value="Suministros">💡 Suministros</option>
+            <option value="Coche">🚗 Coche</option>
+            <option value="Ocio">🎉 Ocio</option>
+            <option value="Otros">📦 Otros</option>
+
+        </select>
+
+        <button onclick="agregarGasto()">
+            Añadir
+        </button>
+
+    </div>
+
+    <div class="resumen-gastos">
+
+        <h3>
+            💰 Total del mes:
+            <span id="totalMes">0,00 €</span>
+        </h3>
+
+    </div>
+
+    <ul id="listaGastos"></ul>
+
+</div>
             <h2>💌 Mensaje</h2>
 
             <p id="mensaje">
