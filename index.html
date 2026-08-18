@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 
@@ -12,600 +13,454 @@
 
 <body>
 
-    <div class="contenedor">
+<div class="contenedor">
 
-        <!-- CABECERA -->
-        <header class="cabecera">
+    <!-- CABECERA -->
+    <header class="cabecera">
 
-            <div class="corazon">❤️</div>
+        <div class="corazon">❤️</div>
 
-            <h1>Nuestra Casa</h1>
+        <h1>Nuestra Casa</h1>
 
-            <p>Nuestro pequeño rincón</p>
+        <p>Nuestro pequeño rincón</p>
 
-        </header>
-
-
-        <!-- PANEL PRINCIPAL -->
-        <div class="panel-principal">
-
-            <div class="panel-titulo">
-
-                <span>🏠</span>
-
-                <div>
-                    <h2>Así está nuestra casa</h2>
-                    <p>Un vistazo rápido a todo ❤️</p>
-                </div>
-
-            </div>
-
-            <div class="resumen-casa">
-
-                <a href="#compra" class="resumen-card">
-
-                    <span>🛒</span>
-
-                    <strong id="resumenCompra">
-                        0
-                    </strong>
-
-                    <small>
-                        Compra
-                    </small>
-
-                </a>
+    </header>
 
 
-                <a href="#tareas" class="resumen-card">
+    <!-- PANEL PRINCIPAL -->
+    <div class="panel-principal">
 
-                    <span>🧹</span>
+        <div class="panel-titulo">
 
-                    <strong id="resumenTareas">
-                        0
-                    </strong>
+            <span>🏠</span>
 
-                    <small>
-                        Tareas
-                    </small>
-
-                </a>
-
-
-                <a href="#agenda" class="resumen-card">
-
-                    <span>📅</span>
-
-                    <strong id="resumenAgenda">
-                        0
-                    </strong>
-
-                    <small>
-                        Planes
-                    </small>
-
-                </a>
-
-
-                <a href="#gastos" class="resumen-card">
-
-                    <span>💰</span>
-
-                    <strong id="resumenGastos">
-                        0,00 €
-                    </strong>
-
-                    <small>
-                        Gastos
-                    </small>
-
-                </a>
-
+            <div>
+                <h2>Así está nuestra casa</h2>
+                <p>Un vistazo rápido a todo ❤️</p>
             </div>
 
         </div>
 
+        <div class="resumen-casa">
 
-        <!-- CONTADOR -->
-        <div class="tarjeta tarjeta-principal">
-
-            <div class="icono-tarjeta">💕</div>
-
-            <h2>Llevamos juntos</h2>
-
-            <p id="contador">
-                Calculando...
-            </p>
-
-            <div class="separador"></div>
-
-            <p class="subtitulo">
-                Cada día, un poquito más ❤️
-            </p>
-
-        </div>
-
-
-        <!-- FECHA -->
-        <div class="tarjeta fecha-card">
-
-            <div class="icono-tarjeta">📅</div>
-
-            <h2>Hoy</h2>
-
-            <p id="fecha"></p>
-
-        </div>
-
-
-        <!-- ACCESOS RÁPIDOS -->
-        <div class="accesos">
-
-            <a href="#compra" class="acceso">
-
-                <span class="acceso-icono">🛒</span>
-
-                <strong>Compra</strong>
-
-                <small>
-                    Lista de la compra
-                </small>
-
+            <a href="#compra" class="resumen-card">
+                <span>🛒</span>
+                <strong id="resumenCompra">0</strong>
+                <small>Compra</small>
             </a>
 
-
-            <a href="#tareas" class="acceso">
-
-                <span class="acceso-icono">🧹</span>
-
-                <strong>Tareas</strong>
-
-                <small>
-                    Casa
-                </small>
-
+            <a href="#tareas" class="resumen-card">
+                <span>🧹</span>
+                <strong id="resumenTareas">0</strong>
+                <small>Tareas</small>
             </a>
 
-
-            <a href="#agenda" class="acceso">
-
-                <span class="acceso-icono">📅</span>
-
-                <strong>Agenda</strong>
-
-                <small>
-                    Nuestros planes
-                </small>
-
+            <a href="#agenda" class="resumen-card">
+                <span>📅</span>
+                <strong id="resumenAgenda">0</strong>
+                <small>Planes</small>
             </a>
 
-
-            <a href="#gastos" class="acceso">
-
-                <span class="acceso-icono">💰</span>
-
-                <strong>Gastos</strong>
-
-                <small>
-                    Economía de casa
-                </small>
-
-            </a>
-
-
-            <a href="#recuerdos" class="acceso">
-
-                <span class="acceso-icono">📸</span>
-
-                <strong>Recuerdos</strong>
-
-                <small>
-                    Nuestras fotos
-                </small>
-
-            </a>
-
-
-            <a href="#zona-mensaje" class="acceso">
-
-                <span class="acceso-icono">💌</span>
-
-                <strong>Mensaje</strong>
-
-                <small>
-                    Para nosotros
-                </small>
-
+            <a href="#gastos" class="resumen-card">
+                <span>💰</span>
+                <strong id="resumenGastos">0,00 €</strong>
+                <small>Gastos</small>
             </a>
 
         </div>
 
-
-        <!-- LISTA DE LA COMPRA -->
-        <div class="tarjeta" id="compra">
-
-            <div class="titulo-seccion">
-
-                <div class="titulo-icono">
-                    🛒
-                </div>
-
-                <div>
-
-                    <h2>
-                        Lista de la compra
-                    </h2>
-
-                    <p>
-                        Lo que necesitamos en casa
-                    </p>
-
-                </div>
-
-            </div>
+    </div>
 
 
-            <div class="entrada">
+    <!-- CONTADOR -->
+    <div class="tarjeta tarjeta-principal">
 
-                <input
-                    type="text"
-                    id="producto"
-                    placeholder="¿Qué necesitamos?"
-                >
+        <div class="icono-tarjeta">💕</div>
 
-                <button onclick="agregarProducto()">
-                    Añadir
-                </button>
+        <h2>Llevamos juntos</h2>
 
-            </div>
+        <p id="contador">
+            Calculando...
+        </p>
 
+        <div class="separador"></div>
 
-            <ul id="listaCompra"></ul>
+        <p class="subtitulo">
+            Cada día, un poquito más ❤️
+        </p>
 
-        </div>
-
-
-        <!-- TAREAS -->
-        <div class="tarjeta" id="tareas">
-
-            <div class="titulo-seccion">
-
-                <div class="titulo-icono">
-                    🧹
-                </div>
-
-                <div>
-
-                    <h2>
-                        Tareas de casa
-                    </h2>
-
-                    <p>
-                        Para mantener nuestro hogar
-                    </p>
-
-                </div>
-
-            </div>
+    </div>
 
 
-            <div class="entrada">
+    <!-- FECHA -->
+    <div class="tarjeta fecha-card">
 
-                <input
-                    type="text"
-                    id="tarea"
-                    placeholder="Añadir tarea..."
-                >
+        <div class="icono-tarjeta">📅</div>
 
-                <button onclick="agregarTarea()">
-                    Añadir
-                </button>
+        <h2>Hoy</h2>
 
-            </div>
+        <p id="fecha"></p>
+
+    </div>
 
 
-            <ul id="listaTareas"></ul>
+    <!-- ACCESOS RÁPIDOS -->
+    <div class="accesos">
 
-        </div>
+        <a href="#compra" class="acceso">
+            <span class="acceso-icono">🛒</span>
+            <strong>Compra</strong>
+            <small>Lista de la compra</small>
+        </a>
 
+        <a href="#tareas" class="acceso">
+            <span class="acceso-icono">🧹</span>
+            <strong>Tareas</strong>
+            <small>Casa</small>
+        </a>
 
-        <!-- AGENDA -->
-        <div class="tarjeta" id="agenda">
+        <a href="#agenda" class="acceso">
+            <span class="acceso-icono">📅</span>
+            <strong>Agenda</strong>
+            <small>Nuestros planes</small>
+        </a>
 
-            <h2>
-                📅 Nuestra agenda
-            </h2>
+        <a href="#gastos" class="acceso">
+            <span class="acceso-icono">💰</span>
+            <strong>Gastos</strong>
+            <small>Economía de casa</small>
+        </a>
 
-            <p>
-                Nuestros planes y fechas importantes ❤️
-            </p>
+        <a href="#recuerdos" class="acceso">
+            <span class="acceso-icono">📸</span>
+            <strong>Recuerdos</strong>
+            <small>Nuestras fotos</small>
+        </a>
 
+        <a href="#zona-mensaje" class="acceso">
+            <span class="acceso-icono">💌</span>
+            <strong>Mensaje</strong>
+            <small>Para nosotros</small>
+        </a>
 
-            <div class="agenda-formulario">
-
-                <input
-                    type="text"
-                    id="tituloAgenda"
-                    placeholder="¿Qué tenemos?"
-                >
-
-
-                <input
-                    type="date"
-                    id="fechaAgenda"
-                >
-
-
-                <input
-                    type="time"
-                    id="horaAgenda"
-                >
-
-
-                <select id="categoriaAgenda">
-
-                    <option value="Pareja">
-                        ❤️ Pareja
-                    </option>
-
-                    <option value="Cita">
-                        🍽️ Cita
-                    </option>
-
-                    <option value="Viaje">
-                        ✈️ Viaje
-                    </option>
-
-                    <option value="Cumpleaños">
-                        🎂 Cumpleaños
-                    </option>
-
-                    <option value="Casa">
-                        🏠 Casa
-                    </option>
-
-                    <option value="Otros">
-                        📌 Otros
-                    </option>
-
-                </select>
+    </div>
 
 
-                <input
-                    type="text"
-                    id="notasAgenda"
-                    placeholder="Notas (opcional)..."
-                >
+    <!-- LISTA DE LA COMPRA -->
+    <div class="tarjeta" id="compra">
 
+        <div class="titulo-seccion">
 
-                <button onclick="agregarEvento()">
-                    📅 Añadir evento
-                </button>
+            <div class="titulo-icono">🛒</div>
 
-            </div>
-
-
-            <div
-                id="listaAgenda"
-                class="lista-agenda">
+            <div>
+                <h2>Lista de la compra</h2>
+                <p>Lo que necesitamos en casa</p>
             </div>
 
         </div>
 
+        <div class="entrada">
 
-        <!-- GASTOS -->
-        <div class="tarjeta" id="gastos">
-
-            <div class="titulo-seccion">
-
-                <div class="titulo-icono">
-                    💰
-                </div>
-
-                <div>
-
-                    <h2>
-                        Gastos de casa
-                    </h2>
-
-                    <p>
-                        La economía de nuestro hogar
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="resumen-gastos">
-
-                <span>
-                    Total del mes
-                </span>
-
-                <strong id="totalMes">
-                    0,00 €
-                </strong>
-
-            </div>
-
-
-            <div class="gastos-formulario">
-
-                <input
-                    type="text"
-                    id="conceptoGasto"
-                    placeholder="Concepto..."
-                >
-
-
-                <input
-                    type="number"
-                    id="importeGasto"
-                    placeholder="Importe..."
-                    step="0.01"
-                    min="0"
-                >
-
-
-                <select id="categoriaGasto">
-
-                    <option value="Comida">
-                        🛒 Comida
-                    </option>
-
-                    <option value="Casa">
-                        🏠 Casa
-                    </option>
-
-                    <option value="Suministros">
-                        💡 Suministros
-                    </option>
-
-                    <option value="Coche">
-                        🚗 Coche
-                    </option>
-
-                    <option value="Ocio">
-                        🎉 Ocio
-                    </option>
-
-                    <option value="Otros">
-                        📦 Otros
-                    </option>
-
-                </select>
-
-
-                <button onclick="agregarGasto()">
-                    Añadir gasto
-                </button>
-
-            </div>
-
-
-            <ul id="listaGastos"></ul>
-
-        </div>
-
-
-        <!-- RECUERDOS -->
-        <div class="tarjeta" id="recuerdos">
-
-            <div class="titulo-seccion">
-
-                <div class="titulo-icono">
-                    📸
-                </div>
-
-                <div>
-
-                    <h2>
-                        Nuestros recuerdos
-                    </h2>
-
-                    <p>
-                        Los momentos que queremos guardar ❤️
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="fotos-formulario">
-
-                <label
-                    for="foto"
-                    class="selector-foto"
-                >
-                    📷 Elegir una foto
-                </label>
-
-                <input
-                    type="file"
-                    id="foto"
-                    accept="image/*"
-                    hidden
-                >
-
-
-                <div
-                    id="nombreFoto"
-                    class="nombre-foto">
-                    Ninguna foto seleccionada
-                </div>
-
-
-                <input
-                    type="text"
-                    id="descripcionFoto"
-                    placeholder="¿Qué recuerdo es? ❤️"
-                >
-
-
-                <button
-                    onclick="subirFoto()"
-                    id="botonSubirFoto"
-                >
-                    📤 Guardar recuerdo
-                </button>
-
-            </div>
-
-
-            <div
-                id="galeriaFotos"
-                class="galeria-fotos">
-            </div>
-
-        </div>
-
-
-        <!-- MENSAJE -->
-        <div
-            class="tarjeta mensaje-card"
-            id="zona-mensaje"
-        >
-
-            <div class="mensaje-corazon">
-                💌
-            </div>
-
-            <h2>
-                Un mensaje para nosotros
-            </h2>
-
-            <p id="mensaje">
-                Te quiero ❤️
-            </p>
-
-            <button
-                class="boton-cita"
-                onclick="modoCita()"
+            <input
+                type="text"
+                id="producto"
+                placeholder="¿Qué necesitamos?"
             >
-                🎲 ¿Qué hacemos hoy?
+
+            <button onclick="agregarProducto()">
+                Añadir
+            </button>
+
+        </div>
+
+        <ul id="listaCompra"></ul>
+
+    </div>
+
+
+    <!-- TAREAS -->
+    <div class="tarjeta" id="tareas">
+
+        <div class="titulo-seccion">
+
+            <div class="titulo-icono">🧹</div>
+
+            <div>
+                <h2>Tareas de casa</h2>
+                <p>Para mantener nuestro hogar</p>
+            </div>
+
+        </div>
+
+        <div class="entrada">
+
+            <input
+                type="text"
+                id="tarea"
+                placeholder="Añadir tarea..."
+            >
+
+            <button onclick="agregarTarea()">
+                Añadir
+            </button>
+
+        </div>
+
+        <ul id="listaTareas"></ul>
+
+    </div>
+
+
+    <!-- AGENDA -->
+    <div class="tarjeta" id="agenda">
+
+        <h2>📅 Nuestra agenda</h2>
+
+        <p>
+            Nuestros planes y fechas importantes ❤️
+        </p>
+
+        <div class="agenda-formulario">
+
+            <input
+                type="text"
+                id="tituloAgenda"
+                placeholder="¿Qué tenemos?"
+            >
+
+            <input
+                type="date"
+                id="fechaAgenda"
+            >
+
+            <input
+                type="time"
+                id="horaAgenda"
+            >
+
+            <select id="categoriaAgenda">
+
+                <option value="Pareja">❤️ Pareja</option>
+                <option value="Cita">🍽️ Cita</option>
+                <option value="Viaje">✈️ Viaje</option>
+                <option value="Cumpleaños">🎂 Cumpleaños</option>
+                <option value="Casa">🏠 Casa</option>
+                <option value="Otros">📌 Otros</option>
+
+            </select>
+
+            <input
+                type="text"
+                id="notasAgenda"
+                placeholder="Notas (opcional)..."
+            >
+
+            <button onclick="agregarEvento()">
+                📅 Añadir evento
+            </button>
+
+        </div>
+
+        <div
+            id="listaAgenda"
+            class="lista-agenda">
+        </div>
+
+    </div>
+
+
+    <!-- GASTOS -->
+    <div class="tarjeta" id="gastos">
+
+        <div class="titulo-seccion">
+
+            <div class="titulo-icono">💰</div>
+
+            <div>
+                <h2>Gastos de casa</h2>
+                <p>La economía de nuestro hogar</p>
+            </div>
+
+        </div>
+
+        <div class="resumen-gastos">
+
+            <span>Total del mes</span>
+
+            <strong id="totalMes">
+                0,00 €
+            </strong>
+
+        </div>
+
+        <div class="gastos-formulario">
+
+            <input
+                type="text"
+                id="conceptoGasto"
+                placeholder="Concepto..."
+            >
+
+            <input
+                type="number"
+                id="importeGasto"
+                placeholder="Importe..."
+                step="0.01"
+                min="0"
+            >
+
+            <select id="categoriaGasto">
+
+                <option value="Comida">🛒 Comida</option>
+                <option value="Casa">🏠 Casa</option>
+                <option value="Suministros">💡 Suministros</option>
+                <option value="Coche">🚗 Coche</option>
+                <option value="Ocio">🎉 Ocio</option>
+                <option value="Otros">📦 Otros</option>
+
+            </select>
+
+            <button onclick="agregarGasto()">
+                Añadir gasto
+            </button>
+
+        </div>
+
+        <ul id="listaGastos"></ul>
+
+    </div>
+
+
+    <!-- RECUERDOS -->
+    <div class="tarjeta" id="recuerdos">
+
+        <div class="titulo-seccion">
+
+            <div class="titulo-icono">
+                📸
+            </div>
+
+            <div>
+                <h2>Nuestros recuerdos</h2>
+
+                <p>
+                    Los momentos que queremos guardar ❤️
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="fotos-formulario">
+
+            <!-- SELECTOR DE FOTO -->
+            <label
+                for="foto"
+                class="selector-foto">
+
+                📷 Elegir una foto
+
+            </label>
+
+
+            <!-- IMPORTANTE:
+                 NO está oculto para mejorar
+                 compatibilidad con móviles -->
+            <input
+                type="file"
+                id="foto"
+                accept="image/*"
+                onchange="mostrarFotoSeleccionada()"
+            >
+
+
+            <!-- NOMBRE -->
+            <div
+                id="nombreFoto"
+                class="nombre-foto">
+
+                Ninguna foto seleccionada
+
+            </div>
+
+
+            <!-- DESCRIPCIÓN -->
+            <input
+                type="text"
+                id="descripcionFoto"
+                placeholder="¿Qué recuerdo es? ❤️"
+            >
+
+
+            <!-- BOTÓN -->
+            <button
+                onclick="subirFoto()"
+                id="botonSubirFoto">
+
+                📤 Guardar recuerdo
+
             </button>
 
         </div>
 
 
-        <!-- PIE -->
-        <footer>
-
-            <p>
-                Hecho con ❤️ para nuestro hogar
-            </p>
-
-        </footer>
+        <!-- GALERÍA -->
+        <div
+            id="galeriaFotos"
+            class="galeria-fotos">
+        </div>
 
     </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- MENSAJE -->
+    <div
+        class="tarjeta mensaje-card"
+        id="zona-mensaje">
 
-    <script src="script.js"></script>
+        <div class="mensaje-corazon">
+            💌
+        </div>
+
+        <h2>
+            Un mensaje para nosotros
+        </h2>
+
+        <p id="mensaje">
+            Te quiero ❤️
+        </p>
+
+        <button
+            class="boton-cita"
+            onclick="modoCita()">
+
+            🎲 ¿Qué hacemos hoy?
+
+        </button>
+
+    </div>
+
+
+    <!-- PIE -->
+    <footer>
+
+        <p>
+            Hecho con ❤️ para nuestro hogar
+        </p>
+
+    </footer>
+
+</div>
+
+
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- TU JAVASCRIPT -->
+<script src="script.js"></script>
 
 </body>
 
 </html>
+```
