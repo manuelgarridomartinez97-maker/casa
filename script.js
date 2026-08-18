@@ -402,6 +402,273 @@ function modoCita() {
         aleatoria;
 }
 
+// ========================================
+// FUNCIÓN DE SEGURIDAD
+// ========================================
+
+function escaparHTML(texto) {
+
+    const div = document.createElement("div");
+
+    div.textContent = texto || "";
+
+    return div.innerHTML;
+}
+
+// ========================================
+// AGENDA 📅
+// ========================================
+
+async function cargarAgenda() {
+
+    const { data, error } =
+        await supabaseClient
+            .from("agenda")
+            .select("*")
+            .order("fecha", {
+                ascending: true
+            })
+            .order("hora", {
+                ascending: true
+            });
+
+    if (error) {
+        console.error(
+            "Error cargando agenda:",
+            error
+        );
+        return;
+    }
+
+    mostrarAgenda(data || []);
+}
+
+
+function mostrarAgenda(eventos) {
+
+    const lista =
+        document.getElementById(
+            "listaAgenda"
+        );
+
+    if (!lista) return;
+
+    lista.innerHTML = "";
+
+    if (eventos.length === 0) {
+
+        lista.innerHTML = `
+            <div class="sin-eventos">
+                📅
+                <p>
+                    No hay eventos próximos.
+                </p>
+                <small>
+                    Añadid vuestro primer plan ❤️
+                </small>
+            </div>
+        `;
+
+        return;
+    }
+
+    eventos.forEach((evento) => {
+
+        const elemento =
+            document.createElement("div");
+
+        elemento.className =
+            "evento-agenda";
+
+        const fecha =
+            evento.fecha
+                ? new Date(
+                    evento.fecha +
+                    "T00:00:00"
+                ).toLocaleDateString(
+                    "es-ES",
+                    {
+                        weekday: "long",
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric"
+                    }
+                )
+                : "";
+
+        let hora = "";
+
+        if (evento.hora) {
+            hora =
+                evento.hora.substring(0, 5);
+        }
+
+        const iconos = {
+            Pareja: "❤️",
+            Cita: "🍽️",
+            Viaje: "✈️",
+            Cumpleaños: "🎂",
+            Casa: "🏠",
+            Otros: "📌"
+        };
+
+        const icono =
+            iconos[evento.categoria] ||
+            "📌";
+
+        elemento.innerHTML = `
+
+            <div class="categoria">
+                ${icono}
+                ${evento.categoria}
+            </div>
+
+            <h3>
+                ${escaparHTML(
+                    evento.titulo
+                )}
+            </h3>
+
+            <div class="fecha-evento">
+                📅 ${fecha}
+                ${hora ? ` · 🕐 ${hora}` : ""}
+            </div>
+
+            ${
+                evento.notas
+                    ? `
+                    <div class="notas">
+                        ${escaparHTML(
+                            evento.notas
+                        )}
+                    </div>
+                    `
+                    : ""
+            }
+
+            <button
+                class="eliminar"
+                onclick="eliminarEvento(${evento.id})">
+                ❌
+            </button>
+
+        `;
+
+        lista.appendChild(elemento);
+    });
+}
+
+
+async function agregarEvento() {
+
+    const titulo =
+        document.getElementById(
+            "tituloAgenda"
+        );
+
+    const fecha =
+        document.getElementById(
+            "fechaAgenda"
+        );
+
+    const hora =
+        document.getElementById(
+            "horaAgenda"
+        );
+
+    const categoria =
+        document.getElementById(
+            "categoriaAgenda"
+        );
+
+    const notas =
+        document.getElementById(
+            "notasAgenda"
+        );
+
+    const texto =
+        titulo.value.trim();
+
+    if (
+        texto === "" ||
+        fecha.value === ""
+    ) {
+
+        alert(
+            "Pon un título y una fecha ❤️"
+        );
+
+        return;
+    }
+
+    const { error } =
+        await supabaseClient
+            .from("agenda")
+            .insert([
+                {
+                    titulo: texto,
+                    fecha: fecha.value,
+                    hora: hora.value || null,
+                    categoria:
+                        categoria.value,
+                    notas:
+                        notas.value.trim() ||
+                        null
+                }
+            ]);
+
+    if (error) {
+
+        console.error(
+            "Error añadiendo evento:",
+            error
+        );
+
+        alert(
+            "No se ha podido guardar el evento."
+        );
+
+        return;
+    }
+
+    titulo.value = "";
+    fecha.value = "";
+    hora.value = "";
+    notas.value = "";
+
+    cargarAgenda();
+}
+
+
+async function eliminarEvento(id) {
+
+    const confirmar =
+        confirm(
+            "¿Eliminar este evento?"
+        );
+
+    if (!confirmar) {
+        return;
+    }
+
+    const { error } =
+        await supabaseClient
+            .from("agenda")
+            .delete()
+            .eq("id", id);
+
+    if (error) {
+
+        console.error(
+            "Error eliminando evento:",
+            error
+        );
+
+        return;
+    }
+
+    cargarAgenda();
+}
 
 // ========================================
 // INICIAR APLICACIÓN
@@ -416,6 +683,8 @@ cargarProductos();
 cargarTareas();
 
 cargarGastos();
+
+cargarAgenda();
 
 // ========================================
 // ACTUALIZACIONES EN TIEMPO REAL
@@ -463,6 +732,21 @@ supabaseClient
         },
         () => {
             cargarGastos();
+        }
+    )
+    .subscribe();
+
+supabaseClient
+    .channel("agenda-tiempo-real")
+    .on(
+        "postgres_changes",
+        {
+            event: "*",
+            schema: "public",
+            table: "agenda"
+        },
+        () => {
+            cargarAgenda();
         }
     )
     .subscribe();

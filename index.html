@@ -13,43 +13,124 @@
 
     <div class="contenedor">
 
-        <h1>❤️ Nuestra Casa ❤️</h1>
-        <p>Nuestro pequeño rincón</p>
+        <!-- CABECERA -->
+        <header class="cabecera">
+            <div class="corazon">❤️</div>
 
-        <div class="tarjeta">
-            <h2>💕 Llevamos juntos</h2>
+            <h1>Nuestra Casa</h1>
+
+            <p>Nuestro pequeño rincón</p>
+        </header>
+
+
+        <!-- CONTADOR -->
+        <div class="tarjeta tarjeta-principal">
+
+            <div class="icono-tarjeta">💕</div>
+
+            <h2>Llevamos juntos</h2>
+
             <p id="contador">Calculando...</p>
+
+            <div class="separador"></div>
+
+            <p class="subtitulo">Cada día, un poquito más ❤️</p>
+
         </div>
 
-        <div class="tarjeta">
-            <h2>📅 Hoy</h2>
+
+        <!-- FECHA -->
+        <div class="tarjeta fecha-card">
+
+            <div class="icono-tarjeta">📅</div>
+
+            <h2>Hoy</h2>
+
             <p id="fecha"></p>
+
         </div>
+
+
+        <!-- ACCESOS RÁPIDOS -->
+        <div class="accesos">
+
+            <a href="#compra" class="acceso">
+                <span class="acceso-icono">🛒</span>
+                <strong>Compra</strong>
+                <small>Lista de la compra</small>
+            </a>
+
+            <a href="#tareas" class="acceso">
+                <span class="acceso-icono">🧹</span>
+                <strong>Tareas</strong>
+                <small>Casa</small>
+            </a>
+
+            <a href="#agenda" class="acceso">
+                 <span class="acceso-icono">📅</span>
+                 <strong>Agenda</strong>
+                <small>Planes y fechas</small>
+            </a>
+            <a href="#gastos" class="acceso">
+                <span class="acceso-icono">💰</span>
+                <strong>Gastos</strong>
+                <small>Economía de casa</small>
+            </a>
+
+            <a href="#mensaje" class="acceso">
+                <span class="acceso-icono">💌</span>
+                <strong>Mensaje</strong>
+                <small>Para nosotros</small>
+            </a>
+
+        </div>
+
 
         <!-- LISTA DE LA COMPRA -->
-        <div class="tarjeta">
-            <h2>🛒 Lista de la compra</h2>
+        <div class="tarjeta" id="compra">
+
+            <div class="titulo-seccion">
+                <div class="titulo-icono">🛒</div>
+
+                <div>
+                    <h2>Lista de la compra</h2>
+                    <p>Lo que necesitamos en casa</p>
+                </div>
+            </div>
 
             <div class="entrada">
+
                 <input
                     type="text"
                     id="producto"
-                    placeholder="Añadir producto..."
+                    placeholder="¿Qué necesitamos?"
                 >
 
                 <button onclick="agregarProducto()">
                     Añadir
                 </button>
+
             </div>
 
             <ul id="listaCompra"></ul>
+
         </div>
 
+
         <!-- TAREAS -->
-        <div class="tarjeta">
-            <h2>🧹 Tareas de casa</h2>
+        <div class="tarjeta" id="tareas">
+
+            <div class="titulo-seccion">
+                <div class="titulo-icono">🧹</div>
+
+                <div>
+                    <h2>Tareas de casa</h2>
+                    <p>Para mantener nuestro hogar</p>
+                </div>
+            </div>
 
             <div class="entrada">
+
                 <input
                     type="text"
                     id="tarea"
@@ -59,75 +140,206 @@
                 <button onclick="agregarTarea()">
                     Añadir
                 </button>
+
             </div>
 
             <ul id="listaTareas"></ul>
+
         </div>
 
-        <!-- MENSAJE -->
-        <div class="tarjeta">
-            
-             <h2>💰 Gastos de casa</h2>
+        <!-- AGENDA -->
+<div class="tarjeta" id="agenda">
 
-    <div class="gastos-formulario">
+    <h2>📅 Nuestra agenda</h2>
+
+    <p>
+        Nuestros planes y fechas importantes ❤️
+    </p>
+
+    <div class="agenda-formulario">
 
         <input
             type="text"
-            id="conceptoGasto"
-            placeholder="Concepto..."
+            id="tituloAgenda"
+            placeholder="¿Qué tenemos?"
         >
 
         <input
-            type="number"
-            id="importeGasto"
-            placeholder="Importe..."
-            step="0.01"
-            min="0"
+            type="date"
+            id="fechaAgenda"
         >
 
-        <select id="categoriaGasto">
+        <input
+            type="time"
+            id="horaAgenda"
+        >
 
-            <option value="Comida">🛒 Comida</option>
-            <option value="Casa">🏠 Casa</option>
-            <option value="Suministros">💡 Suministros</option>
-            <option value="Coche">🚗 Coche</option>
-            <option value="Ocio">🎉 Ocio</option>
-            <option value="Otros">📦 Otros</option>
+        <select id="categoriaAgenda">
+
+            <option value="Pareja">
+                ❤️ Pareja
+            </option>
+
+            <option value="Cita">
+                🍽️ Cita
+            </option>
+
+            <option value="Viaje">
+                ✈️ Viaje
+            </option>
+
+            <option value="Cumpleaños">
+                🎂 Cumpleaños
+            </option>
+
+            <option value="Casa">
+                🏠 Casa
+            </option>
+
+            <option value="Otros">
+                📌 Otros
+            </option>
 
         </select>
 
-        <button onclick="agregarGasto()">
-            Añadir
+        <input
+            type="text"
+            id="notasAgenda"
+            placeholder="Notas (opcional)..."
+        >
+
+        <button onclick="agregarEvento()">
+            📅 Añadir evento
         </button>
 
     </div>
 
-    <div class="resumen-gastos">
-
-        <h3>
-            💰 Total del mes:
-            <span id="totalMes">0,00 €</span>
-        </h3>
-
+    <div
+        id="listaAgenda"
+        class="lista-agenda">
     </div>
 
-    <ul id="listaGastos"></ul>
-
 </div>
-            <h2>💌 Mensaje</h2>
+        
+        <!-- GASTOS -->
+        <div class="tarjeta" id="gastos">
+
+            <div class="titulo-seccion">
+
+                <div class="titulo-icono">💰</div>
+
+                <div>
+                    <h2>Gastos de casa</h2>
+                    <p>La economía de nuestro hogar</p>
+                </div>
+
+            </div>
+
+
+            <div class="resumen-gastos">
+
+                <span>Total del mes</span>
+
+                <strong id="totalMes">
+                    0,00 €
+                </strong>
+
+            </div>
+
+
+            <div class="gastos-formulario">
+
+                <input
+                    type="text"
+                    id="conceptoGasto"
+                    placeholder="Concepto..."
+                >
+
+                <input
+                    type="number"
+                    id="importeGasto"
+                    placeholder="Importe..."
+                    step="0.01"
+                    min="0"
+                >
+
+                <select id="categoriaGasto">
+
+                    <option value="Comida">
+                        🛒 Comida
+                    </option>
+
+                    <option value="Casa">
+                        🏠 Casa
+                    </option>
+
+                    <option value="Suministros">
+                        💡 Suministros
+                    </option>
+
+                    <option value="Coche">
+                        🚗 Coche
+                    </option>
+
+                    <option value="Ocio">
+                        🎉 Ocio
+                    </option>
+
+                    <option value="Otros">
+                        📦 Otros
+                    </option>
+
+                </select>
+
+                <button onclick="agregarGasto()">
+                    Añadir gasto
+                </button>
+
+            </div>
+
+
+            <ul id="listaGastos"></ul>
+
+        </div>
+
+
+        <!-- MENSAJE -->
+        <div class="tarjeta mensaje-card" id="zona-mensaje">
+
+            <div class="mensaje-corazon">
+                💌
+            </div>
+
+            <h2>Un mensaje para nosotros</h2>
 
             <p id="mensaje">
                 Te quiero ❤️
             </p>
 
-            <button onclick="modoCita()">
-                🎲 Modo cita
+            <button
+                class="boton-cita"
+                onclick="modoCita()"
+            >
+                🎲 ¿Qué hacemos hoy?
             </button>
+
         </div>
+
+
+        <!-- PIE -->
+        <footer>
+
+            <p>
+                Hecho con ❤️ para nuestro hogar
+            </p>
+
+        </footer>
 
     </div>
 
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <script src="script.js"></script>
 
 </body>
