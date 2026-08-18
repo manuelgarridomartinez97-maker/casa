@@ -242,6 +242,130 @@ async function eliminarTarea(id) {
 }
 
 // ========================================
+// GASTOS DE CASA
+// ========================================
+
+// Cargar gastos desde Supabase
+async function cargarGastos() {
+
+    const { data, error } = await supabaseClient
+        .from("gastos")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+    if (error) {
+        console.error("Error cargando gastos:", error);
+        return;
+    }
+
+    mostrarGastos(data);
+}
+
+
+// Mostrar gastos
+function mostrarGastos(gastos) {
+
+    const lista = document.getElementById("listaGastos");
+
+    lista.innerHTML = "";
+
+    let total = 0;
+
+    gastos.forEach((gasto) => {
+
+        const importe = Number(gasto.importe);
+
+        total += importe;
+
+        const li = document.createElement("li");
+
+        li.innerHTML = `
+            <span>
+                ${gasto.categoria} -
+                ${gasto.concepto}
+                <strong>${importe.toFixed(2).replace(".", ",")} €</strong>
+            </span>
+
+            <button
+                class="eliminar"
+                onclick="eliminarGasto(${gasto.id})">
+                ❌
+            </button>
+        `;
+
+        lista.appendChild(li);
+    });
+
+    document.getElementById("totalMes").textContent =
+        `${total.toFixed(2).replace(".", ",")} €`;
+}
+
+
+// Añadir gasto
+async function agregarGasto() {
+
+    const concepto =
+        document.getElementById("conceptoGasto");
+
+    const importe =
+        document.getElementById("importeGasto");
+
+    const categoria =
+        document.getElementById("categoriaGasto");
+
+    const textoConcepto =
+        concepto.value.trim();
+
+    const valorImporte =
+        parseFloat(importe.value);
+
+    if (
+        textoConcepto === "" ||
+        isNaN(valorImporte) ||
+        valorImporte <= 0
+    ) {
+        return;
+    }
+
+    const { error } = await supabaseClient
+        .from("gastos")
+        .insert([
+            {
+                concepto: textoConcepto,
+                importe: valorImporte,
+                categoria: categoria.value
+            }
+        ]);
+
+    if (error) {
+        console.error("Error añadiendo gasto:", error);
+        return;
+    }
+
+    concepto.value = "";
+    importe.value = "";
+
+    cargarGastos();
+}
+
+
+// Eliminar gasto
+async function eliminarGasto(id) {
+
+    const { error } = await supabaseClient
+        .from("gastos")
+        .delete()
+        .eq("id", id);
+
+    if (error) {
+        console.error("Error eliminando gasto:", error);
+        return;
+    }
+
+    cargarGastos();
+}
+
+// ========================================
 // MODO CITA ❤️
 // ========================================
 
@@ -291,6 +415,8 @@ cargarProductos();
 
 cargarTareas();
 
+cargarGastos();
+
 // ========================================
 // ACTUALIZACIONES EN TIEMPO REAL
 // ========================================
@@ -322,6 +448,21 @@ supabaseClient
         },
         () => {
             cargarTareas();
+        }
+    )
+    .subscribe();
+
+supabaseClient
+    .channel("gastos-tiempo-real")
+    .on(
+        "postgres_changes",
+        {
+            event: "*",
+            schema: "public",
+            table: "gastos"
+        },
+        () => {
+            cargarGastos();
         }
     )
     .subscribe();
