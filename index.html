@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nuestra Casa ❤️</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="contenedor">
+
+        <h1>❤️ Nuestra Casa ❤️</h1>
+        <p>Nuestro pequeño rincón</p>
+
+        <div class="tarjeta">
+            <h2>💕 Llevamos juntos</h2>
+            <p id="contador">Calculando...</p>
+        </div>
+
+        <div class="tarjeta">
+            <h2>📅 Hoy</h2>
+            <p id="fecha"></p>
+        </div>
+
+        <!-- LISTA DE LA COMPRA -->
+        <div class="tarjeta">
+            <h2>🛒 Lista de la compra</h2>
+
+            <div class="entrada">
+                <input
+                    type="text"
+                    id="producto"
+                    placeholder="Añadir producto..."
+                >
+
+                <button onclick="agregarProducto()">
+                    Añadir
+                </button>
+            </div>
+
+            <ul id="listaCompra"></ul>
+        </div>
+
+        <!-- TAREAS -->
+        <div class="tarjeta">
+            <h2>🧹 Tareas de casa</h2>
+
+            <div class="entrada">
+                <input
+                    type="text"
+                    id="tarea"
+                    placeholder="Añadir tarea..."
+                >
+
+                <button onclick="agregarTarea()">
+                    Añadir
+                </button>
+            </div>
+
+            <ul id="listaTareas"></ul>
+        </div>
+
+        <!-- MENSAJE -->
+        <div class="tarjeta">
+            <h2>💌 Mensaje</h2>
+
+            <p id="mensaje">
+                Te quiero ❤️
+            </p>
+
+            <button onclick="modoCita()">
+                🎲 Modo cita
+            </button>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
