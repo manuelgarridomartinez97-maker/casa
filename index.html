@@ -7,7 +7,7 @@
 
     <title>Nuestra Casa ❤️</title>
 
-    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="stylesheet" href="style.css?v=3">
 </head>
 
 <body>
@@ -134,6 +134,17 @@
             <span class="acceso-icono">📸</span>
             <strong>Recuerdos</strong>
             <small>Nuestras fotos</small>
+        </a>
+
+        <a href="https://apps.apple.com/es/app/mi-carrefour-cupones-y-ahorro/id605788142"
+            class="acceso"
+            target="_blank"
+            rel="noopener">
+
+            <span class="acceso-icono">🛒</span>
+            <strong>Carrefour</strong>
+            <small>Mi Carrefour</small>
+
         </a>
 
         <a href="#zona-mensaje" class="acceso">
@@ -363,15 +374,35 @@
             </label>
 
 
-            <!-- IMPORTANTE:
-                 NO está oculto para mejorar
-                 compatibilidad con móviles -->
             <input
                 type="file"
                 id="foto"
                 accept="image/*"
-                onchange="mostrarFotoSeleccionada()"
             >
+
+
+            <!-- VISTA PREVIA -->
+            <div
+                id="vistaPreviaFoto"
+                class="vista-previa-foto"
+                hidden>
+
+                <img
+                    id="imagenPrevia"
+                    src=""
+                    alt="Vista previa"
+                >
+
+                <button
+                    type="button"
+                    id="quitarFoto"
+                    class="quitar-foto">
+
+                    ❌ Quitar foto
+
+                </button>
+
+            </div>
 
 
             <!-- NOMBRE -->
@@ -395,7 +426,8 @@
             <!-- BOTÓN -->
             <button
                 onclick="subirFoto()"
-                id="botonSubirFoto">
+                id="botonSubirFoto"
+                disabled>
 
                 📤 Guardar recuerdo
 
@@ -457,7 +489,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <!-- TU JAVASCRIPT -->
-<script src="script.js?v=2"></script>
+<script src="script.js?v=3"></script>
 
 </body>
 
